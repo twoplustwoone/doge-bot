@@ -75,4 +75,9 @@ async function assertRoomUser({ userId, room }) {
     }
 }
 
-module.exports = { addDoge, getRoom, getRoomUser, getUser, resetCurrentDoges }
+async function getRoomUsersForRoom({ room }) {
+    const roomUsers = await db('room_user').where({ room_id: room })
+    return roomUsers
+}
+
+module.exports = { addDoge, getRoom, getRoomUser, getUser, resetCurrentDoges, getRoomUsersForRoom }

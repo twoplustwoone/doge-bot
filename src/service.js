@@ -24,7 +24,10 @@ module.exports = function commands(robot) {
 
     async function getDoges(res) {
         const { room } = res.message;
-        // TODO
+        const roomUsers = await repository.getRoomUsersForRoom({ room })
+        const message = messages.getDogeListMessage({ roomUsers })
+
+        robot.messageRoom(room, message)
     }
 
     async function resetDoges({ userId, room, dogeCount }) {

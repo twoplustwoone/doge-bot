@@ -6,4 +6,11 @@ const getResetDogesMessage = ({ userId, dogeCount }) => {
     return `:party::party::party::party::party: Congratulations to <@${userId}> who just reached ${dogeCount} doge's! :party::party::party::party::party:`
 }
 
-module.exports = { getDogeMessage, getResetDogesMessage }
+const getDogeListMessage = ({ roomUsers }) => {
+    let message = ''
+    message += `:doge: *Doge'd list* :doge:`
+    roomUsers.forEach(roomUser => message += `\n- <@${roomUser.user_id}>: ${roomUser.total_doge_count}`)
+    return message
+}
+
+module.exports = { getDogeMessage, getResetDogesMessage, getDogeListMessage }
