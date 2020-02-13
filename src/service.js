@@ -5,6 +5,7 @@ module.exports = function commands(robot) {
     return { addDoge, getDoges }
 
     async function addDoge(res) {
+        console.log('message:', message)
         const { room, user } = res.message;
         const { id: userId } = user;
         await repository.addDoge({ userId, room });
