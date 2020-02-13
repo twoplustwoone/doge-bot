@@ -1,9 +1,9 @@
 const db = require('./db');
 
 async function addDoge({ room, userId }) {
-    assertRoom({ room })
-    assertUser({ userId })
-    assertRoomUser({ userId, room })
+    await assertRoom({ room })
+    await assertUser({ userId })
+    await assertRoomUser({ userId, room })
 
     await db.transaction(async (transaction) => {
         await db('room_user').where({ room_id: room, user_id: userId }).increment({ curr_doge_count: 1, total_doge_count: 1 })
