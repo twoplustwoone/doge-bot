@@ -18,6 +18,7 @@ const getDogeListMessage = ({ roomUsers }) => {
 
 const helpMessage = () => {
     const helpText = fs.readFileSync(path.join(__dirname, 'assets', 'help.md'))
+    console.log('helpText:', helpText)
     return helpText
 }
 
