@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const getDogeMessage = ({ currentDogeCount, totalDogeCount, userId }) => {
     return `Oh no! :doge: Looks like <@${userId}> just got doge'd! You're now at ${currentDogeCount} doge's. :doge:\nTotal doge's: ${totalDogeCount}`
 }
@@ -13,4 +16,9 @@ const getDogeListMessage = ({ roomUsers }) => {
     return message
 }
 
-module.exports = { getDogeMessage, getResetDogesMessage, getDogeListMessage }
+const helpMessage = () => {
+    const helpText = fs.readFileSync(path.join(__dirname, '..', 'assets', 'help.md'))
+    return helpText
+}
+
+module.exports = { getDogeMessage, getResetDogesMessage, getDogeListMessage, helpMessage }

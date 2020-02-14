@@ -2,7 +2,7 @@ const messages = require('./messages');
 const repository = require('./repository')
 
 module.exports = function commands(robot) {
-    return { addDoge, getDoges }
+    return { addDoge, getDoges, getHelp }
 
     async function addDoge(res) {
         console.log('message:', res.message)
@@ -34,6 +34,12 @@ module.exports = function commands(robot) {
     async function resetDoges({ userId, room, dogeCount }) {
         await repository.resetCurrentDoges({ userId, room })
         const message = messages.getResetDogesMessage({ userId, dogeCount })
+        robot.messageRoom(room, message)
+    }
+
+    async function getHelp(res) {
+        const { room } = res.message
+        const message = messages.helpMessage();
         robot.messageRoom(room, message)
     }
 }
