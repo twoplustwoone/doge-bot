@@ -20,7 +20,7 @@ async function getRoom({ room }) {
     return roomObj[0]
 }
 
-async function getRoomUser({ room, userId, week, year }) {
+async function getRoomUser({ room, userId, week = utils.getWeekNumber(), year = utils.getYear() }) {
     const roomUser = await db('room_user').where({ room_id: room, user_id: userId, week, year })
     return roomUser[0]
 }
