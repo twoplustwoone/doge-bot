@@ -10,7 +10,7 @@ async function addDoge({ room, userId, userName, week = utils.getWeekNumber(), y
         await db('room_user')
             .where({ room_id: room, user_id: userId, week, year })
             .increment({ curr_doge_count: 1, total_doge_count: 1 })
-            .update({ updated_at: Date.now() })
+            .update({ updated_at: new Date().toISOString() })
         await transaction.commit();
     })
 }
@@ -42,7 +42,7 @@ async function createUser({ userId, userName }) {
         await db('users').insert({
             user_id: userId,
             name: userName,
-            created_at: Date.now()
+            created_at: new Date().toISOString()
         })
         await transaction.commit()
     })
@@ -50,7 +50,7 @@ async function createUser({ userId, userName }) {
 
 async function createRoomUser({ userId, room, week, year }) {
     await db.transaction(async (transaction) => {
-        const now = Date.now()
+        const now = new Date().toISOString()
         await db('room_user').insert({
             user_id: userId,
             room_id: room,
@@ -66,7 +66,7 @@ async function createRoomUser({ userId, room, week, year }) {
 
 async function createRoom({ room }) {
     await db.transaction(async (transaction) => {
-        const now = Date.now()
+        const now = new Date().toISOString()
         await db('rooms').insert({
             room_id: room,
             created_at: now,
