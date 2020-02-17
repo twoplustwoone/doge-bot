@@ -10,5 +10,4 @@ module.exports = function main(robot) {
     // TODO
     // robot.hear(/^(doge scan)$/i, service.scan)
     robot.hear(/^(doge history)$/i, service.getHistory)
-    robot.hear(/^(doge test)$/i, service.getHistory)
 }
