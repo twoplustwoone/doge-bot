@@ -33,7 +33,6 @@ module.exports = function commands(robot) {
     async function getHistory(res) {
         const { room } = res.message
         const roomUsers = await repository.getRoomHistory({ room })
-        console.log('room history:', roomUsers)
         const message = messages.getDogeListMessage({ roomUsers })
 
         robot.messageRoom(room, message)
