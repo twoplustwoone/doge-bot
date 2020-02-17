@@ -1,12 +1,8 @@
 const fs = require('fs')
 const path = require('path')
 
-const getDogeMessage = ({ currentDogeCount, totalDogeCount, userId }) => {
-    return `Oh no! :doge: Looks like <@${userId}> just got doge'd! You're now at ${currentDogeCount} doge's. :doge:\nTotal doge's: ${totalDogeCount}`
-}
-
-const getResetDogesMessage = ({ userId, dogeCount }) => {
-    return `:party::party::party::party::party: Congratulations to <@${userId}> who just reached ${dogeCount} doge's! :party::party::party::party::party:`
+const getDogeMessage = ({ dogeCount, userId }) => {
+    return `Oh no! :doge: Looks like <@${userId}> just got doge'd! You're now at ${dogeCount} doge's. :doge:`
 }
 
 const getDogeListMessage = ({ roomUsers }) => {
@@ -22,4 +18,4 @@ const helpMessage = () => {
     return helpText
 }
 
-module.exports = { getDogeMessage, getResetDogesMessage, getDogeListMessage, helpMessage }
+module.exports = { getDogeMessage, getDogeListMessage, helpMessage }
