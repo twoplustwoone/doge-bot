@@ -17,4 +17,9 @@ const helpMessage = () => {
     return helpText
 }
 
-module.exports = { getDogeMessage, getDogeListMessage, helpMessage }
+const infoMessage = () => {
+    const infoText = fs.readFileSync(path.join(__dirname, 'assets', 'info.md'), 'utf-8')
+    return infoText
+}
+
+module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage }

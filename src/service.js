@@ -2,7 +2,7 @@ const messages = require('./messages');
 const repository = require('./repository')
 
 module.exports = function commands(robot) {
-    return { addDoge, getDoges, getHelp, getHistory }
+    return { addDoge, getDoges, getHelp, getHistory, getInfo }
 
     async function addDoge(res) {
         const { room, user } = res.message;
@@ -27,6 +27,12 @@ module.exports = function commands(robot) {
     async function getHelp(res) {
         const { room } = res.message
         const message = messages.helpMessage();
+        robot.messageRoom(room, message)
+    }
+
+    async function getInfo(res) {
+        const { room } = res.message
+        const message = messages.infoMessage();
         robot.messageRoom(room, message)
     }
 
