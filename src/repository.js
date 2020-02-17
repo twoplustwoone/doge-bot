@@ -96,7 +96,7 @@ async function getRoomUsersForRoom({ room, week = utils.getWeekNumber(), year = 
 }
 
 async function getRoomHistory({ room }) {
-    return await db.select('user_id').from('room_user').where({ room_id: room }).sum('doge_count').groupBy('user_id')
+    return await db.select('user_id').from('room_user').where({ room_id: room }).sum('doge_count as doge_count').groupBy('user_id')
 }
 
 module.exports = { addDoge, getRoom, getRoomUser, getUser, getRoomUsersForRoom, getRoomHistory }
