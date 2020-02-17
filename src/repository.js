@@ -1,12 +1,16 @@
 const db = require('./db');
+const utils = require('./utils')
 
-async function addDoge({ room, userId }) {
+async function addDoge({ room, userId, userName, week = utils.getWeekNumber(), year = utils.getYear() }) {
     await assertRoom({ room })
-    await assertUser({ userId })
-    await assertRoomUser({ userId, room })
+    await assertUser({ userId, userName })
+    await assertRoomUser({ userId, room, week, year })
 
     await db.transaction(async (transaction) => {
-        await db('room_user').where({ room_id: room, user_id: userId }).increment({ curr_doge_count: 1, total_doge_count: 1 })
+        await db('room_user')
+            .where({ room_id: room, user_id: userId, week, year })
+            .increment({ curr_doge_count: 1, total_doge_count: 1 })
+            .update({ updated_at: Date.now() })
         await transaction.commit();
     })
 }
@@ -16,8 +20,8 @@ async function getRoom({ room }) {
     return roomObj[0]
 }
 
-async function getRoomUser({ room, userId }) {
-    const roomUser = await db('room_user').where({ room_id: room, user_id: userId })
+async function getRoomUser({ room, userId, week, year }) {
+    const roomUser = await db('room_user').where({ room_id: room, user_id: userId, week, year })
     return roomUser[0]
 }
 
@@ -26,30 +30,48 @@ async function getUser({ userId }) {
     return user[0]
 }
 
-async function resetCurrentDoges({ room, userId }) {
+async function resetCurrentDoges({ room, userId, week, year }) {
     await db.transaction(async (transaction) => {
         await db('room_user').where({ room_id: room, user_id: userId }).update({ curr_doge_count: 0 })
         await transaction.commit();
     })
 }
 
-async function addUser({ userId }) {
+async function createUser({ userId, userName }) {
     await db.transaction(async (transaction) => {
-        await db.insert({ user_id: userId }).into('users')
+        await db('users').insert({
+            user_id: userId,
+            name: userName,
+            created_at: Date.now()
+        })
         await transaction.commit()
     })
 }
 
-async function addRoomUser({ userId, room }) {
+async function createRoomUser({ userId, room, week, year }) {
     await db.transaction(async (transaction) => {
-        await db.insert({ user_id: userId, room_id: room, curr_doge_count: 0, total_doge_count: 0 }).into('room_user')
+        const now = Date.now()
+        await db('room_user').insert({
+            user_id: userId,
+            room_id: room,
+            doge_count: 0,
+            created_at: now,
+            updated_at: now,
+            week,
+            year,
+        })
         await transaction.commit()
     })
 }
 
-async function addRoom({ room, dogeCount }) {
+async function createRoom({ room }) {
     await db.transaction(async (transaction) => {
-        const result = await db('rooms').insert({ room_id: room, doge_count: dogeCount })
+        const now = Date.now()
+        await db('rooms').insert({
+            room_id: room,
+            created_at: now,
+            oldest_doge_at: now,
+        })
         await transaction.commit()
     })
 }
@@ -57,27 +79,31 @@ async function addRoom({ room, dogeCount }) {
 async function assertRoom({ room }) {
     const roomObj = await getRoom({ room })
     if (!roomObj) {
-        await addRoom({ room, dogeCount: 5 })
+        await createRoom({ room })
     }
 }
 
-async function assertUser({ userId }) {
+async function assertUser({ userId, userName }) {
     const user = await getUser({ userId })
     if (!user) {
-        await addUser({ userId })
+        await createUser({ userId, userName })
     }
 }
 
-async function assertRoomUser({ userId, room }) {
-    const roomUser = await getRoomUser({ userId, room })
+async function assertRoomUser({ userId, room, week, year }) {
+    const roomUser = await getRoomUser({ userId, room, week, year })
     if (!roomUser) {
-        await addRoomUser({ userId, room })
+        await createRoomUser({ userId, room, week, year })
     }
 }
 
-async function getRoomUsersForRoom({ room }) {
-    const roomUsers = await db('room_user').where({ room_id: room })
+async function getRoomUsersForRoom({ room, week = utils.getWeekNumber(), year = utils.getYear() }) {
+    const roomUsers = await db('room_user').where({ room_id: room, week, year })
     return roomUsers
 }
 
-module.exports = { addDoge, getRoom, getRoomUser, getUser, resetCurrentDoges, getRoomUsersForRoom }
+async function getRoomHistory({ room }) {
+    await db.select('user_id').from('room_user').where({ room_id: room }).sum('doge_count')
+}
+
+module.exports = { addDoge, getRoom, getRoomUser, getUser, resetCurrentDoges, getRoomUsersForRoom, getRoomHistory }
