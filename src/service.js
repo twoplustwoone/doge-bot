@@ -39,6 +39,7 @@ module.exports = function commands(robot) {
     async function getHistory(res) {
         const { room } = res.message
         const roomUsers = await repository.getRoomHistory({ room })
+        roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
         const message = messages.getDogeListMessage({ roomUsers })
 
         robot.messageRoom(room, message)
