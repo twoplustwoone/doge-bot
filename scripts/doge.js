@@ -21,9 +21,9 @@ module.exports = function main(robot) {
     //
     var lulz;
 
-    lulz = ['lol', 'rofl', 'lmao'];
+    lulz = ['pepe', 'foo', 'bar'];
 
-    robot.respond(/lulz/i, function (res) {
+    robot.respond(/^lulz$/i, function (res) {
         return res.send(res.random(lulz));
     });
     //
