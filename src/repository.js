@@ -100,7 +100,7 @@ async function getRoomHistory({ room }) {
 }
 
 async function updateLastRequest({ room, userId, week = utils.getYear(), year = utils.getYear() }) {
-    await db.transaction((transaction) => {
+    await db.transaction(async (transaction) => {
         await db('room_user').where({ room_id: room, week, year, user_id: userId }).update({ last_request_at: new Date().toISOString() })
         await transaction.commit()
     })
