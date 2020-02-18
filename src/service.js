@@ -1,7 +1,20 @@
 const messages = require('./messages');
 const repository = require('./repository')
 
-module.exports = function commands(robot) {
+module.exports = function commands(robot, web) {
+    const reactions = [
+        'doge',
+        'doge-cool',
+        'doge2',
+        'doge3d',
+        'doge_gif',
+        'doge3',
+        'dogecoin',
+        'dogecoin',
+        'parrot-doge',
+        'doge_sunglasses',
+    ]
+
     return { addDoge, getDoges, getHelp, getHistory, getInfo }
 
     async function addDoge(res) {
@@ -13,6 +26,7 @@ module.exports = function commands(robot) {
         const message = messages.getDogeMessage({ dogeCount, userId, })
 
         robot.messageRoom(room, message)
+        addReactions({ room, message: res.message })
     }
 
     async function getDoges(res) {
@@ -44,6 +58,14 @@ module.exports = function commands(robot) {
         const message = messages.getDogeListMessage({ roomUsers })
 
         robot.messageRoom(room, message)
+    }
+
+    function addReactions({ room, message }) {
+        reactions.forEach(reaction => web.reactions.add({
+            name: reaction,
+            channel: msg.message.rawMessage.channel,
+            timestamp: message.rawMessage.ts,
+        }))
     }
 
     // async function scan(res) {
