@@ -1,4 +1,5 @@
-const serviceFactory = require('../src/service');
+const serviceFactory = require('../src/service')
+const { WebClient } = require("@slack/client")
 
 module.exports = function main(robot) {
     const web = new WebClient(robot.adapter.options.token)
