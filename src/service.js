@@ -16,6 +16,7 @@ module.exports = function commands(robot) {
     }
 
     async function getDoges(res) {
+        console.log('get doges')
         const { room } = res.message;
         const roomUsers = await repository.getRoomUsersForRoom({ room })
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
