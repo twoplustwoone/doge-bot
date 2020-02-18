@@ -99,8 +99,9 @@ async function getRoomHistory({ room }) {
     return await db.select('user_id').from('room_user').where({ room_id: room }).sum('doge_count as doge_count').groupBy('user_id')
 }
 
-async function updateLastRequest({ room, userId, week = utils.getYear(), year = utils.getYear() }) {
+async function updateLastRequest({ room, userId, week = utils.getWeekNumber(), year = utils.getYear() }) {
     await db.transaction(async (transaction) => {
+        console.log('updateLastRequest', { room, userId, week, year })
         await db('room_user')
             .where({ room_id: room, week, year, user_id: userId })
             .update({ last_request_at: new Date().toISOString() })
