@@ -25,11 +25,10 @@ module.exports = function commands(robot, web) {
         const message = messages.getDogeMessage({ dogeCount, userId, })
 
         robot.messageRoom(room, message)
-        addReactions({ room, message: res.message })
+        addReactions({ message: res.message })
     }
 
     async function getDoges(res) {
-        console.log('get doges')
         const { room } = res.message;
         const roomUsers = await repository.getRoomUsersForRoom({ room })
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
@@ -59,7 +58,7 @@ module.exports = function commands(robot, web) {
         robot.messageRoom(room, message)
     }
 
-    function addReactions({ room, message }) {
+    function addReactions({ message }) {
         reactions.forEach(reaction => web.reactions.add({
             name: reaction,
             channel: message.rawMessage.channel,
