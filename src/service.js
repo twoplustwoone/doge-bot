@@ -31,16 +31,27 @@ module.exports = function commands(robot, web) {
 
             robot.messageRoom(room, message)
             addReactions({ message: res.message })
+
+            await repository.updateLastRequest({ userId, room })
         }
     }
 
     async function getDoges(res) {
-        const { room } = res.message;
-        const roomUsers = await repository.getRoomUsersForRoom({ room })
-        roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
-        const message = messages.getDogeListMessage({ roomUsers })
+        const { room, user } = res.message;
+        const { id: userId } = user;
+        const isGoingTooFast = await checkDogeRate({ room, userId })
+        if (isGoingTooFast) {
+            const message = messages.getRateMessage()
+            robot.messageRoom(room, message)
+        } else {
+            const roomUsers = await repository.getRoomUsersForRoom({ room })
+            roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
+            const message = messages.getDogeListMessage({ roomUsers })
 
-        robot.messageRoom(room, message)
+            robot.messageRoom(room, message)
+
+            await repository.updateLastRequest({ userId, room })
+        }
     }
 
     async function getHelp(res) {
@@ -74,13 +85,13 @@ module.exports = function commands(robot, web) {
 
     async function checkDogeRate({ userId, room }) {
         const roomUser = await repository.getRoomUser({ room, userId })
-        if (!roomUser) {
+        if (!roomUser || !roomUser.last_request_at) {
             return false
         }
-        const lastUpdated = new Date(roomUser.updated_at).getTime()
+        const lastRequest = new Date(roomUser.last_request_at).getTime()
         const now = Date.now()
         // one minutue
-        return now - lastUpdated < 60000
+        return now - lastRequest < 60000
     }
 
     // async function scan(res) {
