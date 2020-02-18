@@ -22,4 +22,8 @@ const infoMessage = () => {
     return infoText
 }
 
-module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage }
+const getRateMessage = () => {
+    return ':dogespin: Oops! Going too fast there :dogespin:'
+}
+
+module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage, getRateMessage }

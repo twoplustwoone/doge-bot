@@ -3,8 +3,8 @@ const repository = require('./repository')
 
 module.exports = function commands(robot, web) {
     const reactions = [
-        'doge',
         'doge-cool',
+        'doge',
         'doge2',
         'doge3d',
         'doge_gif',
@@ -19,13 +19,19 @@ module.exports = function commands(robot, web) {
     async function addDoge(res) {
         const { room, user } = res.message;
         const { id: userId, name } = user;
-        await repository.addDoge({ userId, room, userName: name });
-        const roomUser = await repository.getRoomUser({ room, userId })
-        const { doge_count: dogeCount } = roomUser
-        const message = messages.getDogeMessage({ dogeCount, userId, })
+        const isGoingTooFast = await checkDogeRate({ userId, room })
+        if (isGoingTooFast) {
+            const message = messages.getRateMessage()
+            robot.messageRoom(room, message)
+        } else {
+            await repository.addDoge({ userId, room, userName: name });
+            const roomUser = await repository.getRoomUser({ room, userId })
+            const { doge_count: dogeCount } = roomUser
+            const message = messages.getDogeMessage({ dogeCount, userId, })
 
-        robot.messageRoom(room, message)
-        addReactions({ message: res.message })
+            robot.messageRoom(room, message)
+            addReactions({ message: res.message })
+        }
     }
 
     async function getDoges(res) {
@@ -64,6 +70,14 @@ module.exports = function commands(robot, web) {
             channel: message.rawMessage.channel,
             timestamp: message.rawMessage.ts,
         }))
+    }
+
+    function checkDogeRate({ userId, room }) {
+        const roomUser = await repository.getRoomUser({ room, userId })
+        const lastUpdated = new Date(roomUser.updated_at).getTime()
+        const now = Date.now()
+        // one minutue
+        return now - lastUpdated < 60000
     }
 
     // async function scan(res) {
