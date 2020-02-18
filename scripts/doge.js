@@ -14,6 +14,7 @@ module.exports = function main(robot) {
 
     robot.hear(/^:doge(.*):$/i, service.addDoge)
     robot.hear(/^(get doges|list doges|doge get|doge list)$/i, service.getDoges)
+    robot.respond(/^(get doges|list doges|doge get|doge list)$/i, service.getDoges)
     robot.hear(/^(doge help)$/i, service.getHelp)
     robot.hear(/^(doge info)$/i, service.getInfo)
     // TODO
