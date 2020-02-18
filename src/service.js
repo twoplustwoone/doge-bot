@@ -10,7 +10,6 @@ module.exports = function commands(robot, web) {
         'doge_gif',
         'doge3',
         'dogecoin',
-        'dogecoin',
         'parrot-doge',
         'doge_sunglasses',
     ]
