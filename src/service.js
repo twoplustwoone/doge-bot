@@ -63,7 +63,7 @@ module.exports = function commands(robot, web) {
     function addReactions({ room, message }) {
         reactions.forEach(reaction => web.reactions.add({
             name: reaction,
-            channel: msg.message.rawMessage.channel,
+            channel: message.rawMessage.channel,
             timestamp: message.rawMessage.ts,
         }))
     }
