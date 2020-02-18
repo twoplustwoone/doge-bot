@@ -74,6 +74,9 @@ module.exports = function commands(robot, web) {
 
     async function checkDogeRate({ userId, room }) {
         const roomUser = await repository.getRoomUser({ room, userId })
+        if (!roomUser) {
+            return false
+        }
         const lastUpdated = new Date(roomUser.updated_at).getTime()
         const now = Date.now()
         // one minutue
