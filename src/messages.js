@@ -8,7 +8,7 @@ const getDogeMessage = ({ dogeCount, userId }) => {
 const getDogeListMessage = ({ roomUsers }) => {
     let message = ''
     message += `:doge: *Doge'd list* :doge:`
-    roomUsers.forEach(roomUser => message += `\n- <@${roomUser.user_id}>: ${roomUser.doge_count}`)
+    roomUsers.forEach(roomUser => message += `\n- @${roomUser.name}: ${roomUser.doge_count}`)
     return message
 }
 

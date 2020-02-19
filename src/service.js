@@ -91,9 +91,4 @@ module.exports = function commands(robot, web) {
         // one minutue
         return now - lastRequest < 60000
     }
-
-    // async function scan(res) {
-    // const { room } = res.message
-    // await repository.
-    // }
 }
