@@ -39,7 +39,7 @@ module.exports = function commands(robot, web) {
         const { room } = res.message;
         const roomUsers = await repository.getRoomUsersForRoom({ room })
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
-        const message = messages.getDogeListMessage({ roomUsers })
+        const message = messages.getDogeListMessage({ roomUsers, title: 'list' })
 
         robot.messageRoom(room, message)
     }
@@ -60,7 +60,7 @@ module.exports = function commands(robot, web) {
         const { room } = res.message
         const roomUsers = await repository.getRoomHistory({ room })
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
-        const message = messages.getDogeListMessage({ roomUsers })
+        const message = messages.getDogeListMessage({ roomUsers, title: 'history' })
 
         robot.messageRoom(room, message)
     }
