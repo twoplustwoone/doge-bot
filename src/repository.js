@@ -91,12 +91,19 @@ async function assertRoomUser({ userId, room, week, year }) {
 }
 
 async function getRoomUsersForRoom({ room, week = utils.getWeekNumber(), year = utils.getYear() }) {
-    const roomUsers = await db('room_user').where({ room_id: room, week, year })
+    const roomUsers = await db('room_user')
+        .innerJoin('users', 'room_user.user_id', 'users.user_id')
+        .where({ room_id: room, week, year })
     return roomUsers
 }
 
 async function getRoomHistory({ room }) {
-    return await db.select('user_id').from('room_user').where({ room_id: room }).sum('doge_count as doge_count').groupBy('user_id')
+    return await db.select('users.user_id', 'name')
+        .from('room_user')
+        .innerJoin('users', 'room_user.user_id', 'users.user_id')
+        .where({ room_id: room })
+        .sum('doge_count as doge_count')
+        .groupBy('users.user_id', 'name')
 }
 
 async function updateLastRequest({ room, userId, week = utils.getWeekNumber(), year = utils.getYear() }) {
