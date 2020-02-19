@@ -36,20 +36,12 @@ module.exports = function commands(robot, web) {
     }
 
     async function getDoges(res) {
-        const { room, user } = res.message;
-        const { id: userId } = user;
-        const isGoingTooFast = await checkDogeRate({ room, userId })
-        if (isGoingTooFast) {
-            const message = messages.getRateMessage()
-            robot.messageRoom(room, message)
-        } else {
-            const roomUsers = await repository.getRoomUsersForRoom({ room })
-            roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
-            const message = messages.getDogeListMessage({ roomUsers })
-            await repository.updateLastRequest({ userId, room })
+        const { room } = res.message;
+        const roomUsers = await repository.getRoomUsersForRoom({ room })
+        roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
+        const message = messages.getDogeListMessage({ roomUsers })
 
-            robot.messageRoom(room, message)
-        }
+        robot.messageRoom(room, message)
     }
 
     async function getHelp(res) {
