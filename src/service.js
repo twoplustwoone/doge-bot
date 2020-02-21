@@ -18,9 +18,11 @@ module.exports = function commands(robot, web) {
 
     async function addDoge(res) {
         const { room, user, rawText } = res.message;
-        if(!(/^:doge(.*):$/i).test(rawText)) {
+
+        if (!(/^:doge(.*):$/i).test(rawText)) {
             return
         }
+
         const { id: userId, name } = user;
         const isGoingTooFast = await checkDogeRate({ userId, room })
         if (isGoingTooFast) {
