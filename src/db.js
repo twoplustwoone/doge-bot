@@ -13,7 +13,7 @@ const endOfHost = databaseUrl.indexOf(':', startOfHost)
 const host = databaseUrl.substring(startOfHost, endOfHost)
 
 const startOfDatabase = databaseUrl.indexOf('/', endOfHost) + 1
-const endOfDatabase = databaseUrl.length - 1
+const endOfDatabase = databaseUrl.length
 const database = databaseUrl.substring(startOfDatabase, endOfDatabase)
 
 const db = require('knex')({
