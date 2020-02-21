@@ -17,9 +17,15 @@ module.exports = function commands(robot, web) {
     return { addDoge, getDoges, getHelp, getHistory, getInfo }
 
     async function addDoge(res) {
-        const { room, user, rawText } = res.message;
+        const { room, user, rawText, thread_ts } = res.message;
 
+        // If the :doge: is in the middle of the message, ignore
         if (!(/^:doge(.*):$/i).test(rawText)) {
+            return
+        }
+
+        // If message was inside a thread, ignore
+        if (thread_ts) {
             return
         }
 
@@ -27,7 +33,7 @@ module.exports = function commands(robot, web) {
         const isGoingTooFast = await checkDogeRate({ userId, room })
         if (isGoingTooFast) {
             const message = messages.getRateMessage()
-            robot.messageRoom(room, message)
+            sendMessage({ res, message })
         } else {
             await repository.addDoge({ userId, room, userName: name });
             const roomUser = await repository.getRoomUser({ room, userId })
@@ -35,7 +41,7 @@ module.exports = function commands(robot, web) {
             const message = messages.getDogeMessage({ dogeCount, userId, })
             await repository.updateLastRequest({ userId, room })
 
-            robot.messageRoom(room, message)
+            sendMessage({ res, message })
             addReactions({ message: res.message })
         }
     }
@@ -46,19 +52,17 @@ module.exports = function commands(robot, web) {
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
         const message = messages.getDogeListMessage({ roomUsers, title: 'list' })
 
-        robot.messageRoom(room, message)
+        sendMessage({ res, message })
     }
 
     async function getHelp(res) {
-        const { room } = res.message
         const message = messages.helpMessage();
-        robot.messageRoom(room, message)
+        sendMessage({ res, message })
     }
 
     async function getInfo(res) {
-        const { room } = res.message
         const message = messages.infoMessage();
-        robot.messageRoom(room, message)
+        sendMessage({ res, message })
     }
 
     async function getHistory(res) {
@@ -67,7 +71,7 @@ module.exports = function commands(robot, web) {
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
         const message = messages.getDogeListMessage({ roomUsers, title: 'history' })
 
-        robot.messageRoom(room, message)
+        sendMessage({ res, message })
     }
 
     function addReactions({ message }) {
@@ -87,5 +91,13 @@ module.exports = function commands(robot, web) {
         const now = Date.now()
         // one minutue
         return now - lastRequest < 60000
+    }
+
+    function sendMessage({ res, message }) {
+        robot.adapter.client.web.chat.postMessage(
+            res.message.user.room,
+            message,
+            { thread_ts: res.message.rawMessage.ts }
+        );
     }
 }
