@@ -104,7 +104,7 @@ async function getRoomHistory({ room }) {
         .where({ room_id: room })
         .sum('doge_count as doge_count')
         .groupBy('users.user_id', 'name')
-        .orderBy('doge_count')
+        .orderBy('doge_count', 'desc')
 }
 
 async function updateLastRequest({ room, userId, week = utils.getWeekNumber(), year = utils.getYear() }) {
