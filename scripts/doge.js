@@ -2,6 +2,7 @@ const serviceFactory = require('../src/service')
 const { WebClient } = require("@slack/client")
 
 module.exports = function main(robot) {
+    console.log('main...')
     const web = new WebClient(robot.adapter.options.token)
     const service = serviceFactory(robot, web);
 

@@ -17,6 +17,7 @@ module.exports = function commands(robot, web) {
     return { addDoge, getDoges, getHelp, getHistory, getInfo }
 
     async function addDoge(res) {
+        console.log('addDoge...')
         const { room, user, rawText, thread_ts } = res.message;
 
         // If the :doge: is in the middle of the message, ignore
@@ -47,6 +48,7 @@ module.exports = function commands(robot, web) {
     }
 
     async function getDoges(res) {
+        console.log('getDoges...')
         const { room } = res.message;
         const roomUsers = await repository.getRoomUsersForRoom({ room })
         roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
@@ -56,16 +58,19 @@ module.exports = function commands(robot, web) {
     }
 
     async function getHelp(res) {
+        console.log('getHelp...')
         const message = messages.helpMessage();
         sendMessage({ res, message })
     }
 
     async function getInfo(res) {
+        console.log('getInfo...')
         const message = messages.infoMessage();
         sendMessage({ res, message })
     }
 
     async function getHistory(res) {
+        console.log('getHistory...')
         const { room } = res.message
         const roomUsers = await repository.getRoomHistory({ room })
         // roomUsers.sort((a, b) => a.doge_count < b.doge_count ? 1 : -1)
@@ -75,6 +80,7 @@ module.exports = function commands(robot, web) {
     }
 
     function addReactions({ message }) {
+        console.log('addReactions...')
         reactions.forEach(reaction => web.reactions.add({
             name: reaction,
             channel: message.rawMessage.channel,
@@ -83,6 +89,7 @@ module.exports = function commands(robot, web) {
     }
 
     async function checkDogeRate({ userId, room }) {
+        console.log('checkDogeRate...')
         const roomUser = await repository.getRoomUser({ room, userId })
         if (!roomUser || !roomUser.last_request_at) {
             return false
@@ -94,6 +101,7 @@ module.exports = function commands(robot, web) {
     }
 
     function sendMessage({ res, message }) {
+        console.log('sendMessage...')
         robot.adapter.client.web.chat.postMessage(
             res.message.user.room,
             message,
