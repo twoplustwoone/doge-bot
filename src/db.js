@@ -18,7 +18,7 @@ const database = databaseUrl.substring(startOfDatabase, endOfDatabase)
 
 const db = require('knex')({
   client: 'pg',
-  connection: { host, user, password, database, ssl: true }
+  connection: { host, user, password, database, ssl: { rejectUnauthorized: false }  }
 });
 
 module.exports = db;
