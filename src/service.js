@@ -12,6 +12,10 @@ module.exports = function commands(robot, web) {
         'dogecoin',
         'parrot-doge',
         'doge_sunglasses',
+        'angry-doge',
+        'dogepan',
+        'doge12',
+        'doge-dance',
     ]
 
     return { addDoge, getDoges, getHelp, getHistory, getInfo }
