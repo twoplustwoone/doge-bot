@@ -1,4 +1,4 @@
-import { getStockPrice } from "./stockApi";
+const stockApi = require('./stockApi')
 const db = require("./db");
 const utils = require("./utils");
 
@@ -146,7 +146,7 @@ async function updateLastRequest({
 }
 
 async function getCRMStock() {
-  return await getStockPrice("CRM");
+  return await stockApi.getStockPrice("CRM");
 }
 
 module.exports = {
