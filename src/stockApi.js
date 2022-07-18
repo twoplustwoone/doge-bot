@@ -6,7 +6,7 @@ const getStockPrice = (symbol) => {
   )
     .then((response) => response.json())
     .then((data) => {
-      console.log({ data });
+      console.log({ data, TWELVE_DATA_API_KEY: process.env.TWELVE_DATA_API_KEY });
       return data.values[0].open;
     });
 };
