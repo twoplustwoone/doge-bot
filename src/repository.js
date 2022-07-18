@@ -118,4 +118,8 @@ async function updateLastRequest({ room, userId, week = utils.getWeekNumber(), y
     })
 }
 
-module.exports = { addDoge, getRoom, getRoomUser, getUser, getRoomUsersForRoom, getRoomHistory, updateLastRequest }
+async function getCRMStock() {
+    return await getStockPrice('CRM')
+}
+
+module.exports = { addDoge, getRoom, getRoomUser, getUser, getRoomUsersForRoom, getRoomHistory, updateLastRequest, getCRMStock }

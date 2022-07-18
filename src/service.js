@@ -18,7 +18,7 @@ module.exports = function commands(robot, web) {
         'doge-dance',
     ]
 
-    return { addDoge, getDoges, getHelp, getHistory, getInfo }
+    return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock }
 
     async function addDoge(res) {
         console.log('addDoge...')
@@ -102,6 +102,13 @@ module.exports = function commands(robot, web) {
         const now = Date.now()
         // one minutue
         return now - lastRequest < 60000
+    }
+
+    async function getCRMStock(res) {
+        console.log('getCRMStock...')
+        const stockPrice = await repository.getCRMStock()
+        const message = messages.getStockMessage(stockPrice)
+        sendMessage({ res, message })
     }
 
     function sendMessage({ res, message }) {

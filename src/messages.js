@@ -26,4 +26,9 @@ const getRateMessage = () => {
     return ':dogespin: Oops! Going too fast there :dogespin:'
 }
 
-module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage, getRateMessage }
+const getStockMessage = (price) => {
+    const stockText = `:dogespin: WOW! Stock price: ${price} :dogespin:`
+    return stockText
+}
+
+module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage, getRateMessage, getStockMessage }
