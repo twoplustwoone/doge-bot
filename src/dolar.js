@@ -11,6 +11,7 @@ async function getDolarBlue() {
     .text()
     .replace("$", "");
   const sale = $(".tile.is-parent.is-5 .venta .val").text().replace("$", "");
+  console.log({ purchase, sale });
   return (purchase + sale) / 2;
 }
 
