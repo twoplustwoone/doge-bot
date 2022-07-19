@@ -1,6 +1,7 @@
 const messages = require("./messages");
 const repository = require("./repository");
 const stockApi = require("./stockApi")
+const dolar = require("./dolar");
 
 module.exports = function commands(robot, web) {
   const reactions = [
@@ -119,7 +120,7 @@ module.exports = function commands(robot, web) {
 
   async function getDolarBlue(res) {
     console.log("getDolarBlue...");
-    const dolarBlue = await repository.getDolarBlue();
+    const dolarBlue = await dolar.getDolarBlue();
     const message = messages.getDolarBlueMessage(dolarBlue);
     sendMessage({ res, message });
   }
