@@ -1,5 +1,6 @@
 const messages = require("./messages");
 const repository = require("./repository");
+const stockApi = require("./stockApi")
 
 module.exports = function commands(robot, web) {
   const reactions = [
@@ -18,7 +19,7 @@ module.exports = function commands(robot, web) {
     "doge-dance",
   ];
 
-  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock };
+  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock, getDolarBlue };
 
   async function addDoge(res) {
     console.log("addDoge...");
@@ -111,8 +112,15 @@ module.exports = function commands(robot, web) {
 
   async function getCRMStock(res) {
     console.log("getCRMStock...");
-    const stockPrice = await repository.getCRMStock();
+    const stockPrice = await stockApi.getStockPrice("CRM");
     const message = messages.getStockMessage(stockPrice);
+    sendMessage({ res, message });
+  }
+
+  async function getDolarBlue(res) {
+    console.log("getDolarBlue...");
+    const dolarBlue = await repository.getDolarBlue();
+    const message = messages.getDolarBlueMessage(dolarBlue);
     sendMessage({ res, message });
   }
 

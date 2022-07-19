@@ -1,4 +1,3 @@
-const stockApi = require('./stockApi')
 const db = require("./db");
 const utils = require("./utils");
 
@@ -145,10 +144,6 @@ async function updateLastRequest({
   });
 }
 
-async function getCRMStock() {
-  return await stockApi.getStockPrice("CRM");
-}
-
 module.exports = {
   addDoge,
   getRoom,
@@ -157,5 +152,4 @@ module.exports = {
   getRoomUsersForRoom,
   getRoomHistory,
   updateLastRequest,
-  getCRMStock,
 };

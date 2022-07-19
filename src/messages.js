@@ -31,4 +31,9 @@ const getStockMessage = (price) => {
     return stockText
 }
 
-module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage, getRateMessage, getStockMessage }
+const getDolarBlueMessage = (price) => {
+    const dolarBlueText = `:dogecoin: WOW! Dolar Blue price: ${price} :dogecoin:`
+    return dolarBlueText
+}
+
+module.exports = { getDogeMessage, getDogeListMessage, helpMessage, infoMessage, getRateMessage, getStockMessage, getDolarBlueMessage }
