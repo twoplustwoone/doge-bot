@@ -20,7 +20,7 @@ module.exports = function commands(robot, web) {
     "doge-dance",
   ];
 
-  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock, getDolarBlue };
+  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock, getDolarBlue, elNene };
 
   async function addDoge(res) {
     console.log("addDoge...");
@@ -135,5 +135,11 @@ module.exports = function commands(robot, web) {
   function sendMessage({ res, message }) {
     console.log("sendMessage...");
     robot.adapter.client.web.chat.postMessage(res.message.user.room, message);
+  }
+
+  async function elNene(res) {
+    console.log("el nene esta bien")    
+    sendMessage({res, message: messages.elNeneEstaBienMessage})
+    sendMessage({res, message: messages.elNeneMessage})
   }
 };

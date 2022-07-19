@@ -22,6 +22,9 @@ const helpMessage = () => {
   return helpText;
 };
 
+const elNeneEstaBienMessage = "el nene esta bien"
+const elNeneMessage = "el nene"
+
 const infoMessage = () => {
   const infoText = fs.readFileSync(
     path.join(__dirname, "assets", "info.md"),
@@ -54,4 +57,6 @@ module.exports = {
   getRateMessage,
   getStockMessage,
   getDolarBlueMessage,
+  elNeneEstaBienMessage,
+  elNeneMessage
 };
