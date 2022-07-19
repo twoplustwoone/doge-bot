@@ -12,7 +12,7 @@ async function getDolarBlue() {
     .replace("$", "");
   const sale = $(".tile.is-parent.is-5 .venta .val").text().replace("$", "");
   console.log({ purchase, sale });
-  return (purchase + sale) / 2;
+  return (parseInt(purchase) + parseInt(sale)) / 2;
 }
 
 module.exports = { getDolarBlue };
