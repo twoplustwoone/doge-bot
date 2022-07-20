@@ -132,7 +132,7 @@ module.exports = function commands(robot, web) {
   }
 
   async function getDolarBlue(res) {
-    console.log('getDolarBlue...', res)
+    console.log('getDolarBlue...')
     const dolarBlue = await dolar.getDolarBlue()
     const message = messages.getDolarBlueMessage(dolarBlue)
     sendMessage({ res, message })
@@ -144,6 +144,8 @@ module.exports = function commands(robot, web) {
     const stockPrice = await stockApi.getStockPrice('CRM')
     const message = messages.getCRMBlueMessage(dolarBlue * stockPrice)
     sendMessage({ res, message })
+    console.log('res.finish:', res.finish)
+    console.log('res.messaage.finish:', res.messaage.finish)
     res.finish()
   }
 
