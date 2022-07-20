@@ -20,7 +20,7 @@ module.exports = function commands(robot, web) {
     "doge-dance",
   ];
 
-  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock, getDolarBlue };
+  return { addDoge, getDoges, getHelp, getHistory, getInfo, getCRMStock, getDolarBlue, getCRMBlue };
 
   async function addDoge(res) {
     console.log("addDoge...");
@@ -114,7 +114,8 @@ module.exports = function commands(robot, web) {
   async function getCRMStock(res) {
     console.log("getCRMStock...");
     const stockPrice = await stockApi.getStockPrice("CRM");
-    const message = messages.getStockMessage(stockPrice);
+    const stockPriceOpening = await stockApi.getStockPrice("CRM", "day");
+    const message = messages.getStockMessage(stockPrice, stockPrice - stockPriceOpening);
     sendMessage({ res, message });
   }
 
@@ -122,6 +123,14 @@ module.exports = function commands(robot, web) {
     console.log("getDolarBlue...");
     const dolarBlue = await dolar.getDolarBlue();
     const message = messages.getDolarBlueMessage(dolarBlue);
+    sendMessage({ res, message });
+  }
+
+  async function getCRMBlue(res) {
+    console.log("getCrmBlue...");
+    const dolarBlue = await dolar.getDolarBlue();
+    const stockPrice = await stockApi.getStockPrice("CRM");
+    const message = messages.getCRMBlueMessage(dolarBlue * stockPrice);
     sendMessage({ res, message });
   }
 

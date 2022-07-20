@@ -11,6 +11,8 @@ module.exports = function main(robot) {
     robot.hear(/(doge help)/i, service.getHelp)
     robot.hear(/(doge info)/i, service.getInfo)
     robot.hear(/(doge history)/i, service.getHistory)
+    robot.hear(/(doge blue crm)/i,  service.getCRMBlue)
+    robot.hear(/(doge crm blue)/i, service.getCRMBlue)
     robot.hear(/(doge crm)/i, service.getCRMStock)
     robot.hear(/(doge blue)/i, service.getDolarBlue)
 }
