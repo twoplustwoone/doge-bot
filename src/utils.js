@@ -25,8 +25,10 @@ function getYear() {
 
 // Function to ensure that a variable that can be either a string or a number is formatted as a currency
 function formatCurrency(value) {
+  console.log('formatCurrency...', value)
   if (typeof value === 'string') {
     value = parseFloat(value)
+    console.log('value is string...', value)
   }
   return value.toFixed(2)
 }
