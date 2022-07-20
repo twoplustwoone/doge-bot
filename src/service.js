@@ -144,6 +144,7 @@ module.exports = function commands(robot, web) {
     const stockPrice = await stockApi.getStockPrice('CRM')
     const message = messages.getCRMBlueMessage(dolarBlue * stockPrice)
     sendMessage({ res, message })
+    res.finish()
   }
 
   function sendThreadMessage({ res, message }) {
