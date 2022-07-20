@@ -34,9 +34,17 @@ const getRateMessage = () => {
   return ":dogespin: Oops! Going too fast there :dogespin:";
 };
 
-const getStockMessage = (price) => {
-  const stockText = `:dogespin: WOW! Stock price: ${price} :dogespin:`;
-  return stockText;
+const getStockMessage = (price, delta = 0) => {
+  if (delta > 1) {
+    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks:`;
+  }
+  if (delta < -10) {
+    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik:`;
+  }
+  if (delta < -1) {
+    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :stonks_down:`;
+  }
+  return `:dogespin: WOW! Stock price: ${price} :dogespin:`;
 };
 
 const getDolarBlueMessage = (price) => {
@@ -44,6 +52,13 @@ const getDolarBlueMessage = (price) => {
     Math.round(price * 100) / 100
   } :dogecoin:`;
   return dolarBlueText;
+};
+
+const getCRMBlueMessage = (price) => {
+  const crmBlueText = `:dogecoin: WOW! CRM at Dolar Blue price: $${
+    Math.round(price * 100) / 100
+  } :dogecoin:`;
+  return crmBlueText;
 };
 
 module.exports = {
@@ -54,4 +69,5 @@ module.exports = {
   getRateMessage,
   getStockMessage,
   getDolarBlueMessage,
+  getCRMBlueMessage,
 };
