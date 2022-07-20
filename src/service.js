@@ -121,8 +121,8 @@ module.exports = function commands(robot, web) {
   }
 
   async function getCRMStock(res) {
-    console.log('getCRMStock...', res)
-    if (res.match[0] === 'doge crm blue') {
+    console.log('getCRMStock...', res.match)
+    if (res.match[1] === 'doge crm blue') {
       console.log('Wrong match')
       return
     }
@@ -136,7 +136,8 @@ module.exports = function commands(robot, web) {
   }
 
   async function getDolarBlue(res) {
-    if (res.match[0] === 'doge blue crm') {
+    console.log('getDolarBlue...', res.match)
+    if (res.match[1] === 'doge blue crm') {
       console.log('Wrong match')
       return
     }
