@@ -122,6 +122,10 @@ module.exports = function commands(robot, web) {
 
   async function getCRMStock(res) {
     console.log('getCRMStock...', res)
+    if (res.match[0] === 'doge crm blue') {
+      console.log('Wrong match')
+      return
+    }
     const stockPrice = await stockApi.getStockPrice('CRM')
     const stockPriceOpening = await stockApi.getStockPrice('CRM', 'day')
     const message = messages.getStockMessage(
@@ -132,7 +136,10 @@ module.exports = function commands(robot, web) {
   }
 
   async function getDolarBlue(res) {
-    console.log('getDolarBlue...')
+    if (res.match[0] === 'doge blue crm') {
+      console.log('Wrong match')
+      return
+    }
     const dolarBlue = await dolar.getDolarBlue()
     const message = messages.getDolarBlueMessage(dolarBlue)
     sendMessage({ res, message })
@@ -144,9 +151,6 @@ module.exports = function commands(robot, web) {
     const stockPrice = await stockApi.getStockPrice('CRM')
     const message = messages.getCRMBlueMessage(dolarBlue * stockPrice)
     sendMessage({ res, message })
-    console.log({ res })
-    console.log('res.finish:', res.finish)
-    console.log('res.message.finish:', res.message.finish)
     res.finish()
   }
 
