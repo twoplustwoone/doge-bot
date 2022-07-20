@@ -1,6 +1,5 @@
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { formatCurrency } = require('./utils')
 
 const url = 'https://dolarhoy.com/'
 
@@ -12,7 +11,7 @@ async function getDolarBlue() {
     .text()
     .replace('$', '')
   const sale = $('.tile.is-parent.is-5 .venta .val').text().replace('$', '')
-  return (formatCurrency(purchase) + formatCurrency(sale)) / 2
+  return (parseFloat(purchase) + parseFloat(sale)) / 2
 }
 
 module.exports = { getDolarBlue }

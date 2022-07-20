@@ -1,5 +1,6 @@
 const fs = require('fs')
 const path = require('path')
+const { formatCurrency } = require('./utils')
 
 const getDogeMessage = ({ dogeCount, userId }) => {
   return `Oh no! :doge: Looks like <@${userId}> just got doge'd! You're now at ${dogeCount} doge's. :doge:`
@@ -48,16 +49,16 @@ const getStockMessage = (price, delta = 0) => {
 }
 
 const getDolarBlueMessage = (price) => {
-  const dolarBlueText = `:dogecoin: WOW! Dolar Blue price: $${
-    Math.round(price * 100) / 100
-  } :dogecoin:`
+  const dolarBlueText = `:dogecoin: WOW! Dolar Blue price: $${formatCurrency(
+    price
+  )} :dogecoin:`
   return dolarBlueText
 }
 
 const getCRMBlueMessage = (price) => {
-  const crmBlueText = `:dogecoin: WOW! CRM at Dolar Blue price: $${
-    Math.round(price * 100) / 100
-  } :dogecoin:`
+  const crmBlueText = `:dogecoin: WOW! CRM at Dolar Blue price: $${formatCurrency(
+    price
+  )} :dogecoin:`
   return crmBlueText
 }
 
