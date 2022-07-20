@@ -1,4 +1,4 @@
-:doge-cool: *Hey there* :doge-cool:
+:doge-cool: _Hey there_ :doge-cool:
 Doge Bot is a bot used for counting how many :doge:s each person in a channel has sent
 Why? Because _*Trust is our #1 value*_
 And if you leave your computer unattended, then there is much doge :doge3d:
