@@ -41,6 +41,7 @@
     "*.{js,css,md}": "prettier --write"
   },
   "scripts": {
+    "heroku-prebuild": "npm config set ignore-scripts true",
     "prepare": "husky install"
   }
 }
