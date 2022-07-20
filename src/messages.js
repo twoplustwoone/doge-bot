@@ -35,12 +35,15 @@ const getRateMessage = () => {
 };
 
 const getStockMessage = (price, delta = 0) => {
-  if(delta > 1)
+  if (delta > 1) {
     return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks:`;
-  else if (delta < -10)
+  }
+  if (delta < -10) {
     return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik:`;
-  else if (delta < -1)
+  }
+  if (delta < -1) {
     return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :stonks_down:`;
+  }
   return `:dogespin: WOW! Stock price: ${price} :dogespin:`;
 };
 
@@ -66,5 +69,5 @@ module.exports = {
   getRateMessage,
   getStockMessage,
   getDolarBlueMessage,
-  getCRMBlueMessage
+  getCRMBlueMessage,
 };
