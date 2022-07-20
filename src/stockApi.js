@@ -1,3 +1,4 @@
+const { formatCurrency } = require('./utils')
 const baseUri = 'https://api.twelvedata.com'
 
 const getStockPrice = (symbol, interval = 'min') => {
@@ -7,7 +8,7 @@ const getStockPrice = (symbol, interval = 'min') => {
     .then((response) => response.json())
     .then((data) => {
       console.log({ data })
-      return data.values[0].open
+      return formatCurrency(data.values[0].open)
     })
 }
 

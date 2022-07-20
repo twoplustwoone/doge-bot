@@ -121,7 +121,7 @@ module.exports = function commands(robot, web) {
   }
 
   async function getCRMStock(res) {
-    console.log('getCRMStock...')
+    console.log('getCRMStock...', res)
     const stockPrice = await stockApi.getStockPrice('CRM')
     const stockPriceOpening = await stockApi.getStockPrice('CRM', 'day')
     const message = messages.getStockMessage(
@@ -132,7 +132,7 @@ module.exports = function commands(robot, web) {
   }
 
   async function getDolarBlue(res) {
-    console.log('getDolarBlue...')
+    console.log('getDolarBlue...', res)
     const dolarBlue = await dolar.getDolarBlue()
     const message = messages.getDolarBlueMessage(dolarBlue)
     sendMessage({ res, message })

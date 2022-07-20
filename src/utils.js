@@ -1,6 +1,7 @@
 module.exports = {
   getWeekNumber,
   getYear,
+  formatCurrency,
 }
 
 function getWeekNumber() {
@@ -20,4 +21,12 @@ function getYear() {
   const year = new Date().getFullYear()
 
   return year
+}
+
+// Function to ensure that a variable that can be either a string or a number is formatted as a currency
+function formatCurrency(value) {
+  if (typeof value === 'string') {
+    value = parseFloat(value)
+  }
+  return value.toFixed(2)
 }
