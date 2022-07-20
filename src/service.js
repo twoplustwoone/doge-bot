@@ -146,6 +146,7 @@ module.exports = function commands(robot, web) {
     sendMessage({ res, message })
     console.log('res.finish:', res.finish)
     console.log('res.messaage.finish:', res.messaage.finish)
+    console.log({ res })
     res.finish()
   }
 
