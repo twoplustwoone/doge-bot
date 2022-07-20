@@ -41,6 +41,6 @@
     "*.{js,css,md}": "prettier --write"
   },
   "scripts": {
-    "prepare": "husky install"
+    "postinstall": "husky install"
   }
 }
