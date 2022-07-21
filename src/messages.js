@@ -49,6 +49,16 @@ const getStockMessage = (price, delta = 0) => {
   return `:dogespin: WOW! Stock price: ${price} :dogespin:`
 }
 
+const getMeatMessage = (price) => {
+  price = formatCurrency(price)
+  return `:doge2: wow, much meat, very vacio at ${price} :doge2:`
+}
+
+const getUSDMeatMessage = (price) => {
+  price = formatCurrency(price)
+  return `:doge2: wow, much meat, very vacio at ${price} :dollar: :doge2:`
+}
+
 const getDolarBlueMessage = (price) => {
   const dolarBlueText = `:dogecoin: WOW! Dolar Blue price: $${formatCurrency(
     price
@@ -72,4 +82,6 @@ module.exports = {
   getStockMessage,
   getDolarBlueMessage,
   getCRMBlueMessage,
+  getMeatMessage,
+  getUSDMeatMessage
 }

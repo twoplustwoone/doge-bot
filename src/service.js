@@ -1,6 +1,7 @@
 const messages = require('./messages')
 const repository = require('./repository')
 const stockApi = require('./stockApi')
+const meatApi = require('./meatApi')
 const dolar = require('./dolar')
 
 module.exports = function commands(robot, web) {
@@ -29,6 +30,8 @@ module.exports = function commands(robot, web) {
     getCRMStock,
     getDolarBlue,
     getCRMBlue,
+    getMeatBlue,
+    getMeatPrice
   }
 
   async function addDoge(res) {
@@ -135,22 +138,42 @@ module.exports = function commands(robot, web) {
     sendMessage({ res, message })
   }
 
+  async function getMeatPrice(res) {
+    console.log('getMeatPrice...', res.match)
+    if (res.match.input.indexOf('doge vacio blue') !== -1) {
+      console.log('Wrong match')
+      return
+    }
+    const meatPrice = await meatApi.getMeatPrice()
+    const message = messages.getMeatMessage(meatPrice)
+    sendMessage({ res, message })
+  }
+
+  async function getMeatBlue(res) {
+    console.log('getMeatBlue...')
+    const dollarBlue = await dolar.getDolarBlue()
+    const meatPrice = await meatApi.getMeatPrice()
+    const message = messages.getUSDMeatMessage(meatPrice/dollarBlue)
+    sendMessage({ res, message })
+    res.finish()
+  }
+
   async function getDolarBlue(res) {
     console.log('getDolarBlue...', res.match)
     if (res.match.input.indexOf('doge blue crm') !== -1) {
       console.log('Wrong match')
       return
     }
-    const dolarBlue = await dolar.getDolarBlue()
-    const message = messages.getDolarBlueMessage(dolarBlue)
+    const dollarBlue = await dolar.getDolarBlue()
+    const message = messages.getDolarBlueMessage(dollarBlue)
     sendMessage({ res, message })
   }
 
   async function getCRMBlue(res) {
     console.log('getCrmBlue...')
-    const dolarBlue = await dolar.getDolarBlue()
+    const dollarBlue = await dolar.getDolarBlue()
     const stockPrice = await stockApi.getStockPrice('CRM')
-    const message = messages.getCRMBlueMessage(dolarBlue * stockPrice)
+    const message = messages.getCRMBlueMessage(dollarBlue * stockPrice)
     sendMessage({ res, message })
     res.finish()
   }
