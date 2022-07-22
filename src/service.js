@@ -177,7 +177,7 @@ module.exports = function commands(robot, web) {
     console.log('getMeatBlue...')
     const dollarBlue = await dolar.getDolarBlue()
     const meatPrice = await meatApi.getMeatPrice()
-    const message = messages.getUSDMeatMessage(meatPrice / dollarBlue)
+    const message = messages.getUSDMeatMessage(meatPrice/dollarBlue)
     sendMessage({ res, message })
     res.finish()
   }
