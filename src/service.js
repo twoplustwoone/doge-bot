@@ -1,6 +1,7 @@
 const messages = require('./messages')
 const repository = require('./repository')
 const stockApi = require('./stockApi')
+const stockSentiment = require('./stockSentiment')
 const meatApi = require('./meatApi')
 const dolar = require('./dolar')
 
@@ -31,7 +32,8 @@ module.exports = function commands(robot, web) {
     getDolarBlue,
     getCRMBlue,
     getMeatBlue,
-    getMeatPrice
+    getMeatPrice,
+    getCRMPrediction
   }
 
   async function addDoge(res) {
@@ -138,6 +140,28 @@ module.exports = function commands(robot, web) {
     sendMessage({ res, message })
   }
 
+  async function getCRMPrediction(res) {
+    console.log('getCRMPrediction...', res.match)
+    let screenshotURL = await stockSentiment.getStockPrediction()
+    let blocks = [
+      {
+        type: 'header',
+        text: {
+          type: 'plain_text',
+          text: 'CRM Prediction',
+          emoji: true,
+        },
+      },
+      {
+        type: 'image',
+        image_url: screenshotURL,
+        alt_text: 'prediction',
+      },
+    ]
+    let message = ''
+    sendBlockMessage({ res, message, blocks })
+  }
+
   async function getMeatPrice(res) {
     console.log('getMeatPrice...', res.match)
     if (res.match.input.indexOf('doge vacio blue') !== -1) {
@@ -188,5 +212,11 @@ module.exports = function commands(robot, web) {
   function sendMessage({ res, message }) {
     console.log('sendMessage...')
     robot.adapter.client.web.chat.postMessage(res.message.user.room, message)
+  }
+
+  function sendBlockMessage({ res, message, blocks }) {
+    robot.adapter.client.web.chat.postMessage(res.message.user.room, message, {
+      attachments: [{ blocks: blocks }],
+    })
   }
 }
