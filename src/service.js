@@ -33,7 +33,7 @@ module.exports = function commands(robot, web) {
     getCRMBlue,
     getMeatBlue,
     getMeatPrice,
-    getCRMPrediction,
+    getCRMPrediction
   }
 
   async function addDoge(res) {
