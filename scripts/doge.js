@@ -3,7 +3,7 @@ const { WebClient } = require('@slack/client')
 
 module.exports = function main(robot) {
   console.log('main...')
-  const web = new WebClient(robot.adapter.options.token)
+  const web = new WebClient('')
   const service = serviceFactory(robot, web)
 
   robot.hear(/:doge(.*):/i, service.addDoge)
@@ -17,4 +17,5 @@ module.exports = function main(robot) {
   robot.hear(/(doge blue)/i, service.getDolarBlue)
   robot.hear(/(doge vacio)/i, service.getMeatPrice)
   robot.hear(/(doge vacio blue)/i, service.getMeatBlue)
+  robot.hear(/(doge prediction)/i, service.getCRMPrediction)
 }
