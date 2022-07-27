@@ -59,7 +59,8 @@ const getStockMessage = (price, delta = 0) => {
 }
 
 const getMeatMessage = (cut, price) => {
-  price = formatCurrency(price)
+  if(!isNaN(price))
+    price = formatCurrency(price)
   return `:doge2: wow, much meat, very ${cut} at ${price} :doge2:`
 }
 
