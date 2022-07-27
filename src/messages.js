@@ -58,14 +58,14 @@ const getStockMessage = (price, delta = 0) => {
   return `:dogespin: WOW! Stock price: ${price} :dogespin:`
 }
 
-const getMeatMessage = (price) => {
+const getMeatMessage = (cut, price) => {
   price = formatCurrency(price)
-  return `:doge2: wow, much meat, very vacio at ${price} :doge2:`
+  return `:doge2: wow, much meat, very ${cut} at ${price} :doge2:`
 }
 
-const getUSDMeatMessage = (price) => {
+const getUSDMeatMessage = (cut, price) => {
   price = formatCurrency(price)
-  return `:doge2: wow, much meat, very vacio at ${price} :dollar: :doge2:`
+  return `:doge2: wow, much meat, very ${cut} at ${price} :dollar: :doge2:`
 }
 
 const getDolarBlueMessage = (price) => {
