@@ -37,10 +37,19 @@ const getRateMessage = () => {
 
 const getStockMessage = (price, delta = 0) => {
   price = formatCurrency(price)
+  if (delta > 10) {
+    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky: :champagne:`
+  }
+  if (delta > 5) {
+    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky:`
+  }
   if (delta > 1) {
     return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks:`
   }
   if (delta < -10) {
+    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik: :everythingisfine:`
+  }
+  if (delta < -5) {
     return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik:`
   }
   if (delta < -1) {
