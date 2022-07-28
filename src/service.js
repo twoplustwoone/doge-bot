@@ -169,7 +169,7 @@ module.exports = function commands(robot, web) {
       console.log('Wrong match')
       return
     }
-    const searchString = 'doge precio ';
+    const searchString = 'doge precio '
     const number = res.match.input.indexOf(searchString)
     if (number !== -1) {
       cut = res.match.input.substring(number + searchString.length)
