@@ -1,4 +1,4 @@
-const databaseUrl = process.env.DATABASE_URL
+const databaseUrl = process.env.DATABASE_URL || ''
 
 const startOfUser = databaseUrl.indexOf('//') + 2
 const endOfUser = databaseUrl.indexOf(':', startOfUser)

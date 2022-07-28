@@ -131,11 +131,13 @@ module.exports = function commands(robot, web) {
       console.log('Wrong match')
       return
     }
-    const stockPrice = await stockApi.getStockPrice('CRM')
-    const stockPriceOpening = await stockApi.getStockPriceOpening('CRM')
-    const variation = (stockPriceOpening / stockPriceOpening - 1) * 100
-    console.log({ stockPrice, stockPriceOpening, variation })
-    const message = messages.getStockMessage(stockPrice, variation)
+    const stockPrice = parseInt((await stockApi.getStockPrice('CRM')) * 100)
+    const stockPriceOpening = parseInt(
+      (await stockApi.getStockPriceOpening('CRM')) * 100
+    )
+    const variation =
+      ((stockPrice / stockPriceOpening - 1) * 100 * 100).toFixed(2) / 100
+    const message = messages.getStockMessage(stockPrice / 100, variation)
     sendMessage({ res, message })
   }
 
