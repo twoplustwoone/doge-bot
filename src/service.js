@@ -33,7 +33,7 @@ module.exports = function commands(robot, web) {
     getCRMBlue,
     getMeatBlue,
     getMeatPrice,
-    getCRMPrediction
+    getCRMPrediction,
   }
 
   async function addDoge(res) {
@@ -164,20 +164,26 @@ module.exports = function commands(robot, web) {
 
   async function getMeatPrice(res) {
     console.log('getMeatPrice...', res.match)
+    let cut = 'vacío'
     if (res.match.input.indexOf('doge vacio blue') !== -1) {
       console.log('Wrong match')
       return
     }
-    const meatPrice = await meatApi.getMeatPrice()
-    const message = messages.getMeatMessage(meatPrice)
+    const number = res.match.input.indexOf('doge precio ')
+    if (number !== -1) {
+      cut = res.match.input.substring(number)
+    }
+    const meatPrice = await meatApi.getMeatPrice(cut)
+    const message = messages.getMeatMessage(cut, meatPrice)
     sendMessage({ res, message })
   }
 
   async function getMeatBlue(res) {
     console.log('getMeatBlue...')
+    const cut = 'vacío'
     const dollarBlue = await dolar.getDolarBlue()
-    const meatPrice = await meatApi.getMeatPrice()
-    const message = messages.getUSDMeatMessage(meatPrice/dollarBlue)
+    const meatPrice = await meatApi.getMeatPrice(cut)
+    const message = messages.getUSDMeatMessage(cut, meatPrice / dollarBlue)
     sendMessage({ res, message })
     res.finish()
   }

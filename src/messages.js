@@ -37,10 +37,19 @@ const getRateMessage = () => {
 
 const getStockMessage = (price, delta = 0) => {
   price = formatCurrency(price)
+  if (delta > 10) {
+    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky: :champagne:`
+  }
+  if (delta > 5) {
+    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky:`
+  }
   if (delta > 1) {
     return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks:`
   }
   if (delta < -10) {
+    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik: :everythingisfine:`
+  }
+  if (delta < -5) {
     return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik:`
   }
   if (delta < -1) {
@@ -49,14 +58,16 @@ const getStockMessage = (price, delta = 0) => {
   return `:dogespin: WOW! Stock price: ${price} :dogespin:`
 }
 
-const getMeatMessage = (price) => {
-  price = formatCurrency(price)
-  return `:doge2: wow, much meat, very vacio at ${price} :doge2:`
+const getMeatMessage = (cut, price) => {
+  if (!isNaN(price)) {
+    price = formatCurrency(price)
+  }
+  return `:doge2: wow, much meat, very ${cut} at ${price} :doge2:`
 }
 
-const getUSDMeatMessage = (price) => {
+const getUSDMeatMessage = (cut, price) => {
   price = formatCurrency(price)
-  return `:doge2: wow, much meat, very vacio at ${price} :dollar: :doge2:`
+  return `:doge2: wow, much meat, very ${cut} at ${price} :dollar: :doge2:`
 }
 
 const getDolarBlueMessage = (price) => {
@@ -83,5 +94,5 @@ module.exports = {
   getDolarBlueMessage,
   getCRMBlueMessage,
   getMeatMessage,
-  getUSDMeatMessage
+  getUSDMeatMessage,
 }
