@@ -133,8 +133,8 @@ module.exports = function commands(robot, web) {
     }
     const stockPrice = await stockApi.getStockPrice('CRM')
     const stockPriceOpening = await stockApi.getStockPriceOpening('CRM')
-    console.log({ stockPrice, stockPriceOpening })
     const variation = (stockPriceOpening / stockPriceOpening - 1) * 100
+    console.log({ stockPrice, stockPriceOpening, variation })
     const message = messages.getStockMessage(stockPrice, variation)
     sendMessage({ res, message })
   }

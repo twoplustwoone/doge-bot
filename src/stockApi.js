@@ -13,7 +13,7 @@ const getStockPrice = (symbol, interval = 'min') => {
     })
 }
 
-const getStockPriceOpening = async (symbol) => {
+const getStockPriceOpening = (symbol) => {
   // const date = new Date()
   // const year = date.getFullYear()
   // const day = date.getDay()
@@ -25,9 +25,8 @@ const getStockPriceOpening = async (symbol) => {
   // if (stockPriceOpeningCache[dateString][symbol]) {
   //   return stockPriceOpeningCache[dateString][symbol]
   // }
-  const stockPrice = await getStockPrice(symbol, 'day')
+  return getStockPrice(symbol, 'day')
   // stockPriceOpeningCache[dateString][symbol] = stockPrice
-  return stockPrice
 }
 
 module.exports = { getStockPrice, getStockPriceOpening }
