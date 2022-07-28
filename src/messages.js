@@ -59,7 +59,7 @@ const getStockMessage = (price, delta = 0) => {
 }
 
 const getMeatMessage = (cut, price) => {
-  if(!isNaN(price)) {
+  if (!isNaN(price)) {
     price = formatCurrency(price)
   }
   return `:doge2: wow, much meat, very ${cut} at ${price} :doge2:`
@@ -94,5 +94,5 @@ module.exports = {
   getDolarBlueMessage,
   getCRMBlueMessage,
   getMeatMessage,
-  getUSDMeatMessage
+  getUSDMeatMessage,
 }
