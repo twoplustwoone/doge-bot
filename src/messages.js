@@ -2,6 +2,13 @@ const fs = require('fs')
 const path = require('path')
 const { formatCurrency } = require('./utils')
 
+/**
+ *
+ * @param {Object} param0
+ * @param {number} param0.dogeCount
+ * @param {string} param0.userId
+ * @returns
+ */
 const getDogeMessage = ({ dogeCount, userId }) => {
   return `Oh no! :doge: Looks like <@${userId}> just got doge'd! You're now at ${dogeCount} doge's. :doge:`
 }
@@ -71,17 +78,13 @@ const getUSDMeatMessage = (cut, price) => {
 }
 
 const getDolarBlueMessage = (price) => {
-  const dolarBlueText = `:dogecoin: WOW! Dolar Blue price: $${formatCurrency(
-    price
-  )} :dogecoin:`
-  return dolarBlueText
+  price = formatCurrency(price)
+  return `:dogecoin: WOW! Dolar Blue price: ${price} :dogecoin:`
 }
 
 const getCRMBlueMessage = (price) => {
-  const crmBlueText = `:dogecoin: WOW! CRM at Dolar Blue price: $${formatCurrency(
-    price
-  )} :dogecoin:`
-  return crmBlueText
+  price = formatCurrency(price)
+  return `:dogecoin: WOW! CRM at Dolar Blue price: ${price} :dogecoin:`
 }
 
 module.exports = {

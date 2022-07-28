@@ -4,10 +4,7 @@ module.exports = {
   formatCurrency,
 }
 
-function getWeekNumber() {
-  const now = Date.now()
-  const date = new Date(+now)
-
+function getWeekNumber(date = new Date()) {
   date.setHours(0, 0, 0)
   date.setDate(date.getDate() + 4 - (date.getDay() || 7))
 
@@ -17,9 +14,9 @@ function getWeekNumber() {
   return weekNumber
 }
 
-function getYear() {
-  const year = new Date().getFullYear()
-
+// Function to return current year
+function getYear(date = new Date()) {
+  const year = date.getFullYear()
   return year
 }
 
@@ -27,8 +24,11 @@ function getYear() {
 function formatCurrency(value) {
   console.log('formatCurrency...', value)
   if (typeof value === 'string') {
+    if (isNaN(value)) {
+      throw Error('Invalid value')
+    }
     value = parseFloat(value)
     console.log('value is string...', value)
   }
-  return value.toFixed(2)
+  return `$${value.toFixed(2)}`
 }
