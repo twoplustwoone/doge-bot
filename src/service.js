@@ -169,7 +169,7 @@ module.exports = function commands(robot, web) {
       console.log('Wrong match')
       return
     }
-    var number = res.match.input.indexOf('doge precio ')
+    const number = res.match.input.indexOf('doge precio ')
     if (number !== -1) {
       cut = res.match.input.substring(number)
     }
@@ -180,7 +180,7 @@ module.exports = function commands(robot, web) {
 
   async function getMeatBlue(res) {
     console.log('getMeatBlue...')
-    var cut = 'vacío'
+    const cut = 'vacío'
     const dollarBlue = await dolar.getDolarBlue()
     const meatPrice = await meatApi.getMeatPrice(cut)
     const message = messages.getUSDMeatMessage(cut, meatPrice / dollarBlue)

@@ -1,7 +1,7 @@
 const baseUri = 'http://www.jscarnicerias.com.ar/api/categorias/productos'
 
 function getCutPrice(data, cut, currency) {
-  var corte = data[0].productos.find(
+  const corte = data[0].productos.find(
     (p) => p.nombre.toLowerCase() === cut.toLowerCase()
   )
   if (corte) {
