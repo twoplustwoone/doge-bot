@@ -9,7 +9,7 @@ const getStockPrice = (symbol, interval = 'min') => {
     .then((response) => response.json())
     .then((data) => {
       console.log({ data })
-      return data.values[0].open
+      return parseFloat(data.values[0].open)
     })
 }
 
