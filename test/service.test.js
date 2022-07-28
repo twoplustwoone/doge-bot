@@ -31,7 +31,7 @@ describe('service', () => {
       console.log({ returnValue })
       expect(postMessageMock).toHaveBeenCalledWith(
         'room',
-        ':dogespin: WOW! Such stock price: $120.00 :dogespin: very change at 20% :green-arrow: :green-arrow: :stonks: :stonks: :ricky: :ricky: :champagne: :champagne: :ultraparrot: :ultraparrot:'
+        ':dogespin: WOW! Such stock price: $120.00 :dogespin: very change at 20.00% :green-arrow: :green-arrow: :stonks: :stonks: :ricky: :ricky: :champagne: :champagne: :ultraparrot: :ultraparrot:'
       )
     })
   })
