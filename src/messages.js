@@ -2,6 +2,32 @@ const fs = require('fs')
 const path = require('path')
 const { formatCurrency } = require('./utils')
 
+const positiveStockVariationEmojis = [
+  { emoji: ':green-arrow:', variationCost: 0 },
+  { emoji: ':green-arrow:', variationCost: 1 },
+  { emoji: ':stonks:', variationCost: 2 },
+  { emoji: ':stonks:', variationCost: 3 },
+  { emoji: ':ricky:', variationCost: 4 },
+  { emoji: ':ricky:', variationCost: 5 },
+  { emoji: ':champagne:', variationCost: 6 },
+  { emoji: ':champagne:', variationCost: 7 },
+  { emoji: ':ultraparrot:', variationCost: 8 },
+  { emoji: ':ultraparrot:', variationCost: 9 },
+]
+
+const negativeStockVariationEmojis = [
+  { emoji: ':red-arrow:', variationCost: 0 },
+  { emoji: ':red-arrow:', variationCost: 1 },
+  { emoji: ':stonks_down:', variationCost: 2 },
+  { emoji: ':stonks_down:', variationCost: 3 },
+  { emoji: ':panik:', variationCost: 4 },
+  { emoji: ':panik:', variationCost: 5 },
+  { emoji: ':everythingisfine:', variationCost: 6 },
+  { emoji: ':everythingisfine:', variationCost: 7 },
+  { emoji: ':panic-2804:', variationCost: 8 },
+  { emoji: ':panic-2804:', variationCost: 9 },
+]
+
 /**
  *
  * @param {Object} param0
@@ -42,27 +68,24 @@ const getRateMessage = () => {
   return ':dogespin: Oops! Going too fast there :dogespin:'
 }
 
-const getStockMessage = (price, delta = 0) => {
+const getStockMessage = (price, variation = 0) => {
   price = formatCurrency(price)
-  if (delta > 10) {
-    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky: :champagne:`
+  let message = `:dogespin: WOW! Such stock price: ${price} :dogespin: very change at ${variation}%`
+  const absolusteVariation = Math.abs(variation)
+  if (variation > 0) {
+    positiveStockVariationEmojis.forEach((emoji) => {
+      if (absolusteVariation >= emoji.variationCost) {
+        message += ` ${emoji.emoji}`
+      }
+    })
+  } else if (variation < 0) {
+    negativeStockVariationEmojis.forEach((emoji) => {
+      if (absolusteVariation >= emoji.variationCost) {
+        message += ` ${emoji.emoji}`
+      }
+    })
   }
-  if (delta > 5) {
-    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks: :ricky:`
-  }
-  if (delta > 1) {
-    return `:dogespin: WOW! Stock price: ${price} :dogespin: much :stonks:`
-  }
-  if (delta < -10) {
-    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik: :everythingisfine:`
-  }
-  if (delta < -5) {
-    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :panik:`
-  }
-  if (delta < -1) {
-    return `:dogespin: oh noo! Stock price: ${price} :dogespin: much :stonks_down:`
-  }
-  return `:dogespin: WOW! Stock price: ${price} :dogespin:`
+  return message
 }
 
 const getMeatMessage = (cut, price) => {
