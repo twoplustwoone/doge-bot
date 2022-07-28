@@ -1,6 +1,6 @@
 const baseUri = 'https://api.twelvedata.com'
 
-const stockPriceOpeningCache = {}
+// const stockPriceOpeningCache = {}
 
 const getStockPrice = (symbol, interval = 'min') => {
   return fetch(
@@ -14,19 +14,19 @@ const getStockPrice = (symbol, interval = 'min') => {
 }
 
 const getStockPriceOpening = async (symbol) => {
-  const date = new Date()
-  const year = date.getFullYear()
-  const day = date.getDay()
-  const month = date.getMonth()
-  const dateString = `${year}-${month}-${day}`
-  if (!stockPriceOpeningCache[dateString]) {
-    stockPriceOpeningCache[dateString] = {}
-  }
-  if (stockPriceOpeningCache[dateString][symbol]) {
-    return stockPriceOpeningCache[dateString][symbol]
-  }
+  // const date = new Date()
+  // const year = date.getFullYear()
+  // const day = date.getDay()
+  // const month = date.getMonth()
+  // const dateString = `${year}-${month}-${day}`
+  // if (!stockPriceOpeningCache[dateString]) {
+  //   stockPriceOpeningCache[dateString] = {}
+  // }
+  // if (stockPriceOpeningCache[dateString][symbol]) {
+  //   return stockPriceOpeningCache[dateString][symbol]
+  // }
   const stockPrice = await getStockPrice(symbol, 'day')
-  stockPriceOpeningCache[dateString][symbol] = stockPrice
+  // stockPriceOpeningCache[dateString][symbol] = stockPrice
   return stockPrice
 }
 
