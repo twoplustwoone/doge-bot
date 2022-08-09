@@ -1,32 +1,24 @@
+const queryString = require('query-string')
+
 const baseUri = 'https://api.twelvedata.com'
 
-// const stockPriceOpeningCache = {}
-
-const getStockPrice = (symbol, interval = 'min') => {
-  return fetch(
-    `${baseUri}/time_series/?symbol=${symbol}&interval=1${interval}&outputsize=1&format=JSON&apikey=${process.env.TWELVE_DATA_API_KEY}`
-  )
+const getStockPrice = (symbol, interval = '1min', field = 'open') => {
+  const query = {
+    symbol,
+    interval,
+    outputsize: 1,
+    format: 'JSON',
+    previous_close: true,
+    apikey: process.env.TWELVE_DATA_API_KEY,
+  }
+  return fetch(`${baseUri}/time_series/?${queryString.stringify(query)}`)
     .then((response) => response.json())
-    .then((data) => {
-      console.log({ data })
-      return parseFloat(data.values[0].open)
-    })
+    .then((data) => console.log(data) || data)
+    .then((data) => parseFloat(data.values[0][field]))
 }
 
 const getStockPriceOpening = (symbol) => {
-  // const date = new Date()
-  // const year = date.getFullYear()
-  // const day = date.getDay()
-  // const month = date.getMonth()
-  // const dateString = `${year}-${month}-${day}`
-  // if (!stockPriceOpeningCache[dateString]) {
-  //   stockPriceOpeningCache[dateString] = {}
-  // }
-  // if (stockPriceOpeningCache[dateString][symbol]) {
-  //   return stockPriceOpeningCache[dateString][symbol]
-  // }
-  return getStockPrice(symbol, 'day')
-  // stockPriceOpeningCache[dateString][symbol] = stockPrice
+  return getStockPrice(symbol, '1day', 'previous_close')
 }
 
 module.exports = { getStockPrice, getStockPriceOpening }
