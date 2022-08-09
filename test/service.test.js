@@ -17,9 +17,13 @@ describe('service', () => {
   describe('getCRMStock', () => {
     beforeEach(() => {
       // Current stock price
-      fetch.mockResponseOnce(JSON.stringify({ values: [{ open: '120' }] }))
+      fetch.mockResponseOnce(
+        JSON.stringify({ values: [{ open: '120', previous_close: '100' }] })
+      )
       // Opening stock price
-      fetch.mockResponseOnce(JSON.stringify({ values: [{ open: '100' }] }))
+      fetch.mockResponseOnce(
+        JSON.stringify({ values: [{ open: '120', previous_close: '100' }] })
+      )
     })
 
     it('should call mock postMessage() with values', async () => {
