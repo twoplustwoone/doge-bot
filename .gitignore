@@ -6,3 +6,4 @@ sandbox-scripts/
 .eslintcache
 /.idea/
 coverage/
+.npmrc
